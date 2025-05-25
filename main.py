@@ -1,29 +1,33 @@
 import tkinter as tk
-from tkinter import ttk
 
 def borrow_item():
     student_id = student_id_entry.get()
-    item_name = item_combo.get()
+    selected = item_listbox.curselection()
     password = password_entry.get()
 
-    if not student_id or item_name == "Select an item" or not password:
+    if not student_id or not selected or not password:
         result_label.config(text="Please fill all fields.", fg="#D71920")
     elif password == "admin123":
-        result_label.config(text=f"{item_name} borrowed by {student_id}.", fg="#FFFFFF")
+        items = [item_listbox.get(i) for i in selected]
+        result_label.config(text=f"{', '.join(items)} borrowed by {student_id}.", fg="#FFFFFF")
     else:
         result_label.config(text="Wrong admin password.", fg="#D71920")
 
 root = tk.Tk()
 root.title("Borrow Item - APC")
-root.geometry("360x330")
-root.configure(bg="#00205B")  # APC Navy Blue
-frame = tk.Frame(root, bg="#FFFFFF", padx=20, pady=20)
+root.geometry("360x400")
+root.configure(bg="#00205B")  # APC blue
+
+frame = tk.Frame(root, bg="#FFFFFF", padx=15, pady=15)
 frame.place(relx=0.5, rely=0.5, anchor="center")
-tk.Label(frame, text="Student ID:", bg="#FFFFFF", fg="#00205B", font=("Arial", 10, "bold")).pack(anchor="w")
-student_id_entry = tk.Entry(frame, bg="#F0F0F0", fg="#000000", width=30)
+
+tk.Label(frame, text="Student ID:", bg="#FFFFFF", fg="#00205B").pack(anchor="w")
+student_id_entry = tk.Entry(frame, width=30)
 student_id_entry.pack(pady=5)
-tk.Label(frame, text="Select Item:", bg="#FFFFFF", fg="#00205B", font=("Arial", 10, "bold")).pack(anchor="w")
-item_combo = ttk.Combobox(frame, values=[
+
+tk.Label(frame, text="Select Items to Borrow:", bg="#FFFFFF", fg="#00205B").pack(anchor="w")
+item_listbox = tk.Listbox(frame, selectmode="multiple", height=7)
+items = [
     "basketball",
     "ping pong",
     "ping pong balls",
@@ -31,14 +35,18 @@ item_combo = ttk.Combobox(frame, values=[
     "tennis balls",
     "shuttlecocks",
     "badminton net"
-], state="readonly", width=28)
-item_combo.set("Select an item")
-item_combo.pack(pady=5)
-tk.Label(frame, text="Admin Password:", bg="#FFFFFF", fg="#00205B", font=("Arial", 10, "bold")).pack(anchor="w")
-password_entry = tk.Entry(frame, show="*", bg="#F0F0F0", fg="#000000", width=30)
+]
+for item in items:
+    item_listbox.insert(tk.END, item)
+item_listbox.pack(pady=5, fill="x")
+
+tk.Label(frame, text="Admin Password:", bg="#FFFFFF", fg="#00205B").pack(anchor="w")
+password_entry = tk.Entry(frame, show="*", width=30)
 password_entry.pack(pady=5)
-tk.Button(frame, text="Borrow", command=borrow_item, bg="#D71920", fg="#FFFFFF", width=20).pack(pady=15)
-result_label = tk.Label(frame, text="", bg="#FFFFFF", fg="#D71920", font=("Arial", 10, "bold"))
+
+tk.Button(frame, text="Borrow", command=borrow_item, bg="#D71920", fg="white", width=20).pack(pady=10)
+
+result_label = tk.Label(frame, text="", bg="#FFFFFF", fg="#D71920")
 result_label.pack()
 
 root.mainloop()
