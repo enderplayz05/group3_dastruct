@@ -6,7 +6,7 @@ def admin_login():
     password = login_entry.get()
     if password == "admin123":
         hide_login_frame()
-        import main
+        import admin_borrow
 
 
 def hide_login_frame():
