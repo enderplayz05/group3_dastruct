@@ -6,12 +6,12 @@ def admin_login():
     password = login_entry.get()
     if password == "admin123":
         hide_login_frame()
-        exec(open("./main").read())
+        import main
+
 
 def hide_login_frame():
     login_frame.place_forget()
     login_button.place_forget()
-    import main
 
 root = tkinter.Tk()
 root.title("EAMS ADMIN")
