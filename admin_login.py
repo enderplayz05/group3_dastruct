@@ -1,55 +1,68 @@
-import tkinter 
+import tkinter as tk
+from tkinter import messagebox
 
-standard_font = ("Arial", 12, "bold")
+def  admin_login_frame(root):
+    def arrow_button_on_enter(event):
+        back_arrow_button.config(bg='#bbbbbb')
+    def arrow_button_on_leave(event):
+        back_arrow_button.config(bg='#2F2F32')
 
-def admin_login():
-    password = login_entry.get()
-    if password == "admin123":
-        hide_login_frame()
-        import admin_borrow
+    def login_button_on_enter(event):
+        login_button.config(bg='#bbbbbb')
+
+    def login_button_on_leave(event):
+        login_button.config(bg='white')
+
+    def back_action():
+        print("This will be when press, goes to main menu")
+
+    def check_password():
+        correct_password = "admin123"
+        entered_password = password_entry.get()
+
+        if entered_password == correct_password:
+            message_label.config(text="Access granted!", fg='green')
+            password_entry.delete(0, 'end')
+        else:
+            message_label.config(text="Incorrect password. Try again.", fg='red')
+            password_entry.delete(0, 'end')
+
+    content_frame = tk.Frame(root, bg='#dcdcdc')
+    content_frame.place(relx=0.5, rely=0.4, anchor='center', width=580, height=300)
+
+    header_frame = tk.Frame(root, bg='#2F2F32', width=580, height=50)
+    header_frame.place(relx=0.5, y=145,anchor="center")
+
+    password_label = tk.Label(content_frame, text="Password", bg='#dcdcdc', fg='black', font=('Arial', 14, 'bold'))
+    password_label.place(relx=0.5, y=50, anchor='center')
+
+    password_entry = tk.Entry(content_frame, show='*', font=('Arial', 14), width=30)
+    password_entry.place(relx=0.5, y=80, anchor='center')
+
+    message_label = tk.Label(content_frame, text="", bg='#dcdcdc', fg='red', font=('Arial', 12, 'italic'))
+    message_label.place(relx=0.5, y=145, anchor='center')
+
+    back_arrow_button = tk.Button(
+        header_frame, 
+        text='⬅', 
+        bg='#2F2F32', 
+        font=('Arial', 20), 
+        borderwidth=0,
+        command=back_action
+        )
+    back_arrow_button.place(relx=0.1,anchor='ne')
+
+    back_arrow_button.bind("<Enter>",arrow_button_on_enter )
+    back_arrow_button.bind("<Leave>",arrow_button_on_leave )
+
+    title = tk.Label(header_frame, text="Admin Login", bg='#2F2F32', fg='white', font=('Arial', 20, 'bold'))
+    title.place(relx=0.5,rely=0.5,anchor='center')
+
+    login_button = tk.Button(content_frame, text="Login", font=('Arial', 12), bg='white', fg='black', width=10, command=check_password)
+    login_button.place(relx=0.5, y=115, anchor='center')
+
+    login_button.bind("<Enter>", login_button_on_enter)
+    login_button.bind("<Leave>", login_button_on_leave)
 
 
-def hide_login_frame():
-    login_frame.place_forget()
-    login_button.place_forget()
 
-root = tkinter.Tk()
-root.title("EAMS ADMIN")
-root.geometry("1920x720")
-root.configure(bg="#00205B")  # APC blue
-root.state('zoomed')            # Zoomed means that it goes to windowed fullscreen 
-
-title = tkinter.Label(
-    root,
-    text='ADMIN LOGIN',
-    relief=tkinter.RAISED,
-    font=standard_font,
-    height=2,              
-    width=15, 
-    )
-
-title.place(relx = 0.5, rely = 0.05, anchor = tkinter.CENTER)
-
-login_frame = tkinter.Frame(root)
-login_password = tkinter.Label(
-    login_frame, 
-    text='Password',
-    font=standard_font
-    ).grid(row=0)
-login_entry = tkinter.Entry(login_frame)
-login_entry.grid(row=0, column=1)
-
-login_button = tkinter.Button(
-    root, 
-    text="login",
-    font=standard_font,
-    activebackground="blue", 
-    activeforeground="white",
-    disabledforeground="gray",
-    fg="black",
-    command=admin_login,
-    )
-
-login_frame.place(relx = 0.5, rely = 0.12, anchor = tkinter.CENTER)
-login_button.place(relx = 0.5, rely = 0.2, anchor = tkinter.CENTER)
-root.mainloop()
