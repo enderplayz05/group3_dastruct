@@ -16,6 +16,10 @@ def  admin_login_frame(root):
     def back_action():
         print("This will be when press, goes to main menu")
 
+    def hide_everything():
+        content_frame.place_forget()
+        header_frame.place_forget()
+
     def check_password():
         correct_password = "admin123"
         entered_password = password_entry.get()
@@ -23,24 +27,25 @@ def  admin_login_frame(root):
         if entered_password == correct_password:
             message_label.config(text="Access granted!", fg='green')
             password_entry.delete(0, 'end')
+            hide_everything()
         else:
             message_label.config(text="Incorrect password. Try again.", fg='red')
             password_entry.delete(0, 'end')
 
     content_frame = tk.Frame(root, bg='#dcdcdc')
-    content_frame.place(relx=0.5, rely=0.4, anchor='center', width=580, height=300)
+    content_frame.place(relx=0.5, rely=0.4, anchor='center', width=650, height=300)
 
-    header_frame = tk.Frame(root, bg='#2F2F32', width=580, height=50)
+    header_frame = tk.Frame(root, bg='#2F2F32', width=650, height=50)
     header_frame.place(relx=0.5, y=145,anchor="center")
 
     password_label = tk.Label(content_frame, text="Password", bg='#dcdcdc', fg='black', font=('Arial', 14, 'bold'))
-    password_label.place(relx=0.5, y=50, anchor='center')
+    password_label.place(relx=0.5, y=90, anchor='center')
 
     password_entry = tk.Entry(content_frame, show='*', font=('Arial', 14), width=30)
-    password_entry.place(relx=0.5, y=80, anchor='center')
+    password_entry.place(relx=0.5, y= 120, anchor='center')
 
     message_label = tk.Label(content_frame, text="", bg='#dcdcdc', fg='red', font=('Arial', 12, 'italic'))
-    message_label.place(relx=0.5, y=145, anchor='center')
+    message_label.place(relx=0.5, y=165, anchor='center')
 
     back_arrow_button = tk.Button(
         header_frame, 
@@ -50,7 +55,7 @@ def  admin_login_frame(root):
         borderwidth=0,
         command=back_action
         )
-    back_arrow_button.place(relx=0.1,anchor='ne')
+    back_arrow_button.place(relx=0.08,anchor='ne')
 
     back_arrow_button.bind("<Enter>",arrow_button_on_enter )
     back_arrow_button.bind("<Leave>",arrow_button_on_leave )
@@ -59,7 +64,7 @@ def  admin_login_frame(root):
     title.place(relx=0.5,rely=0.5,anchor='center')
 
     login_button = tk.Button(content_frame, text="Login", font=('Arial', 12), bg='white', fg='black', width=10, command=check_password)
-    login_button.place(relx=0.5, y=115, anchor='center')
+    login_button.place(relx=0.5, y=240, anchor='center')
 
     login_button.bind("<Enter>", login_button_on_enter)
     login_button.bind("<Leave>", login_button_on_leave)
