@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-from admin_menu import admin_menu_frame
 
 def  admin_login_frame(root):
     frame_index = 0
@@ -33,7 +32,9 @@ def  admin_login_frame(root):
             )
 
     def back_action():
-        print("This will be when press, goes to main menu")
+        from main_menu import main_menu_frame
+        hide_everything()
+        main_menu_frame(root)
 
     def hide_everything():
         content_frame.place_forget()
@@ -115,7 +116,7 @@ def  admin_login_frame(root):
         )
     
     back_arrow_button.place(
-        relx=0.08,
+        relx=0.07,
         anchor='ne'
         )
 
@@ -179,6 +180,7 @@ def  admin_login_frame(root):
             root.after(750,go_to_admin_admin_menu)
 
     def go_to_admin_admin_menu():
+        from admin_menu import admin_menu_frame
         hide_everything()
         admin_menu_frame(root)
 
