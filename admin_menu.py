@@ -14,6 +14,7 @@ def admin_menu_frame(root):
 
     # === Button Style ===
     def hide_everything():
+        header_label.pack_forget()
         content_frame.place_forget()
         header_frame.place_forget()
     def create_button(text, command):
@@ -23,13 +24,20 @@ def admin_menu_frame(root):
 
     # === Button Functions ===
     def manage_appointments():
-        print("Manage Appointments Clicked")
+        from manage import manage_frame
+        hide_everything()
+        manage_frame(root)
+
 
     def authorize_appointments():
-        print("Authorize Appointments Clicked")
+        hide_everything()
+        from authorize import authorize_frame
+        authorize_frame(root)
 
     def view_history():
-        print("History Clicked")
+        hide_everything()
+        from history import history_frame
+        history_frame(root)
 
     def arrow_button_on_enter(event):
         back_arrow_button.config(

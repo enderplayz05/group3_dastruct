@@ -1,5 +1,9 @@
 import tkinter as tk
+
 def main_menu_frame(window):
+    def hide_everything():
+        main_frame.place_forget()
+        header.place_forget()
 
     main_frame = tk.Frame(window, bg="lightgray")
     main_frame.place(relx=0.5, rely=0.5, anchor="center", width=650, height=300)
@@ -15,14 +19,12 @@ def main_menu_frame(window):
 
     def show_admin():
         from admin_login import admin_login_frame
-        main_frame.place_forget()
-        header.place_forget()
+        hide_everything()
         admin_login_frame(window)
 
     def show_student():
         from Student import student_main_frame
-        header.place_forget()
-        main_frame.place_forget()
+        hide_everything()
         student_main_frame(window)
 
     admin_button.config(command=show_admin)

@@ -3,13 +3,18 @@ from tkinter import messagebox
 import subprocess
 import sys
 def student_main_frame(root):
+    def go_back():
+        hide_everything()
+        from main_menu import main_menu_frame
+        main_menu_frame(root)
+
+    back_button = tk.Button(root, text="← Back", command=go_back,
+                            bg="#1b1f3b", fg="white", font=("Arial", 10, "bold"))
+    back_button.pack(anchor="w", padx=10, pady=(10, 0))
+
     def view_inventory():
-        try:
-            subprocess.run([sys.executable, "View_Inventory.py"])
-        except FileNotFoundError:
-            messagebox.showerror("Error", "View_Inventory.py file not found!")
-        except Exception as e:
-            messagebox.showerror("Error", f"Could not open inventory: {str(e)}")
+        from view_inventory import inventory_frame
+        inventory_frame(root)
 
     def book_appointment():
         messagebox.showinfo("Book Appointment", "Opening appointment booking...")
@@ -19,6 +24,10 @@ def student_main_frame(root):
         main_frame.pack_forget()
         header_frame.pack_forget()
         content_frame.pack_forget()
+        back_button.pack_forget()
+        button_container.pack_forget()
+        inventory_btn.pack_forget()
+        appointment_btn.pack_forget()
     # Create main frame
     main_frame = tk.Frame(root, bg="#2E4BC6")
     main_frame.pack(fill="both", expand=True, padx=20, pady=20)
