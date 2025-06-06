@@ -13,8 +13,12 @@ def student_main_frame(root):
     back_button.pack(anchor="w", padx=10, pady=(10, 0))
 
     def view_inventory():
-        from view_inventory import inventory_frame
-        inventory_frame(root)
+        try:
+            subprocess.run([sys.executable, "View_Inventory.py"])
+        except FileNotFoundError:
+            messagebox.showerror("Error", "View_Inventory.py file not found!")
+        except Exception as e:
+            messagebox.showerror("Error", f"Could not open inventory: {str(e)}")
 
     def book_appointment():
         messagebox.showinfo("Book Appointment", "Opening appointment booking...")
