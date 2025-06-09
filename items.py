@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-student_borrowed_data = {'borrowed':[],'Name':[],'Student_ID':[],'Month':[],'Day':[],'Year':[],'Time':[]}
+student_item_data = []
 def item_GUI(root):
+
     def hide_everything():
         main_frame.pack_forget()
         header_frame.pack_forget()
@@ -26,8 +27,14 @@ def item_GUI(root):
         print("Selected equipment:", selected_items)
         # Show confirmation dialog
         message = "Selected Equipment:\n" + "\n".join(f"• {item}" for item in selected_items)
-        messagebox.showinfo("Booking Confirmation", message)
-        student_borrowed_data['borrowed'] = selected_items
+        messagebox.showinfo("Items Confirmated", message)
+        for var in selected_items:
+            student_item_data.append(var)
+
+        from appointment_name_date import AppointmentBooking
+        print("from item files",student_item_data)
+        hide_everything()
+        AppointmentBooking(root)
 
 
     def get_selected_equipment():

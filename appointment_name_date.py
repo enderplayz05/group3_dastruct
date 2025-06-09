@@ -1,9 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from items import student_item_data
 
+student_appointment_data = {'borrowed':student_item_data,'Name':[],'Student_ID':[],'Month':[],'Day':[],'Year':[],'Time':[]}
+print("from appointment file",student_appointment_data)
 def AppointmentBooking(root):
-    
+
     # Variables to store user input
     name = tk.StringVar()
     student_id = tk.StringVar()
@@ -80,9 +83,9 @@ def AppointmentBooking(root):
     id_entry.bind('<FocusOut>', on_id_focus_out)
     
     def go_back_from_first():
-        from Student import student_main_frame
+        from items import item_GUI
         clear_screen()
-        student_main_frame(root)
+        item_GUI(root)
 
     def go_to_date_screen():
         """Navigate to date selection screen"""
@@ -97,6 +100,7 @@ def AppointmentBooking(root):
         if student_id == "Enter your Student ID Number" or student_id.strip() == "":
             messagebox.showerror("Error", "Please enter your Student ID Number")
             return
+        
         content_frame.pack_forget()
         header.pack_forget()
         back_button.pack_forget()
@@ -230,7 +234,19 @@ def AppointmentBooking(root):
         message += f"Student ID: {student_id.get()}\n"
         message += f"Date: {selected_month.get()} {selected_day.get()}, {selected_year.get()}\n"
         message += f"Time: {selected_time.get()}\n\n"
+        message += f"Borrowed: {student_appointment_data['borrowed']}\n\n"
     # add items here
         
         messagebox.showinfo("Appointment Booked", message)
+        student_appointment_data['Name'] = name.get()
+        student_appointment_data['Student_ID'] = student_id.get()
+        student_appointment_data['Month'] = selected_month.get()
+        student_appointment_data['Day'] = selected_day.get()
+        student_appointment_data['Year'] = selected_year.get()
+        student_appointment_data['Time'] = selected_time.get()
+        print(student_appointment_data)
+        from Student import student_main_frame
+        clear_screen()
+        student_main_frame(root)
+
 
