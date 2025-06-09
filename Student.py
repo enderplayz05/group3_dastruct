@@ -18,9 +18,9 @@ def student_main_frame(root):
         inventory_GUI(root)
 
     def book_appointment():
-        from appointment_name_date import AppointmentBookingApp
+        from appointment_name_date import AppointmentBooking
         hide_everything()
-        AppointmentBookingApp(root)
+        AppointmentBooking(root)
         # Add your appointment booking logic here
 
     def hide_everything():
