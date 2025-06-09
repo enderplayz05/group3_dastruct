@@ -21,7 +21,9 @@ def student_main_frame(root):
             messagebox.showerror("Error", f"Could not open inventory: {str(e)}")
 
     def book_appointment():
-        messagebox.showinfo("Book Appointment", "Opening appointment booking...")
+        from items import item_GUI
+        hide_everything()
+        item_GUI(root)
         # Add your appointment booking logic here
 
     def hide_everything():
