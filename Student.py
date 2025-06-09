@@ -13,17 +13,14 @@ def student_main_frame(root):
     back_button.pack(anchor="w", padx=10, pady=(10, 0))
 
     def view_inventory():
-        try:
-            subprocess.run([sys.executable, "View_Inventory.py"])
-        except FileNotFoundError:
-            messagebox.showerror("Error", "View_Inventory.py file not found!")
-        except Exception as e:
-            messagebox.showerror("Error", f"Could not open inventory: {str(e)}")
+        from view_inventory import inventory_GUI
+        hide_everything()
+        inventory_GUI(root)
 
     def book_appointment():
-        from items import item_GUI
+        from appointment_name_date import AppointmentBookingApp
         hide_everything()
-        item_GUI(root)
+        AppointmentBookingApp(root)
         # Add your appointment booking logic here
 
     def hide_everything():

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-
+student_borrowed_data = {'borrowed':[],'Name':[],'Student_ID':[],'Month':[],'Day':[],'Year':[],'Time':[]}
 def item_GUI(root):
     def hide_everything():
         main_frame.pack_forget()
@@ -27,7 +27,9 @@ def item_GUI(root):
         # Show confirmation dialog
         message = "Selected Equipment:\n" + "\n".join(f"• {item}" for item in selected_items)
         messagebox.showinfo("Booking Confirmation", message)
-        
+        student_borrowed_data['borrowed'] = selected_items
+
+
     def get_selected_equipment():
         """Return list of selected equipment"""
         return [eq for eq, selected in selected_equipment.items() if selected]
