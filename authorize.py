@@ -37,6 +37,7 @@ def authorize_frame(root):
         tk.Label(header_frame, text="Student ID", width=15, font=("Arial", 11, "bold"), bg="#cccccc").pack(side="left")
         tk.Label(header_frame, text="Time", width=15, font=("Arial", 11, "bold"), bg="#cccccc").pack(side="left")
         tk.Label(header_frame, text="Action", width=10, font=("Arial", 11, "bold"), bg="#cccccc").pack(side="left")
+        tk.Label(header_frame, text="Date Sent", width=10, font=("Arial", 11, "bold"), bg="#cccccc").pack(side="left")
 
         for date, student_id, time in appointments_data:
             row_frame = tk.Frame(frame, bg="#d9d9d9", bd=1, relief="solid")
