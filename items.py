@@ -27,6 +27,7 @@ def item_GUI(root):
         # Show confirmation dialog
         message = "Selected Equipment:\n" + "\n".join(f"• {item}" for item in selected_items)
         messagebox.showinfo("Booking Confirmation", message)
+        
     def get_selected_equipment():
         """Return list of selected equipment"""
         return [eq for eq, selected in selected_equipment.items() if selected]
@@ -35,8 +36,8 @@ def item_GUI(root):
         "Basketball", "Shuttle cock", "Tennis Racket", "Ping pong ball",
         "Tennis Ball", "Table tennis racket", "Badminton Racket", "Net"
     ]
-    # Pre-selected items (as shown in the image)
-    selected_equipment = {"Basketball": True, "Badminton Racket": True}
+    
+    selected_equipment = {}
     # Initialize other equipment as not selected
     for equipment in equipment_options:
         if equipment not in selected_equipment:
