@@ -2,15 +2,21 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 def item_GUI(root):
+    def hide_everything():
+        main_frame.pack_forget()
+        header_frame.pack_forget()
+        item_frame.pack_forget()
     def on_equipment_change(equipment):
         """Handle equipment selection change"""
         selected_equipment[equipment] = checkboxes[equipment].get()
         print(f"{equipment} {'selected' if selected_equipment[equipment] else 'deselected'}")
     def on_back_click():
         """Handle back button click"""
-        print("Back button clicked")
+        from Student import student_main_frame
+        hide_everything()
+        student_main_frame(root)
         # Add your back navigation logic here
-        messagebox.showinfo("Navigation", "Back button clicked")
+        
     def on_confirm_click():
         """Handle confirm button click"""
         selected_items = [eq for eq, selected in selected_equipment.items() if selected]
