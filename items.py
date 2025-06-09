@@ -2,7 +2,28 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 def item_GUI(root):
-
+    def on_equipment_change(equipment):
+        """Handle equipment selection change"""
+        selected_equipment[equipment] = checkboxes[equipment].get()
+        print(f"{equipment} {'selected' if selected_equipment[equipment] else 'deselected'}")
+    def on_back_click():
+        """Handle back button click"""
+        print("Back button clicked")
+        # Add your back navigation logic here
+        messagebox.showinfo("Navigation", "Back button clicked")
+    def on_confirm_click():
+        """Handle confirm button click"""
+        selected_items = [eq for eq, selected in selected_equipment.items() if selected]
+        if not selected_items:
+            messagebox.showwarning("Selection Required", "Please select at least one equipment item.")
+            return
+        print("Selected equipment:", selected_items)
+        # Show confirmation dialog
+        message = "Selected Equipment:\n" + "\n".join(f"• {item}" for item in selected_items)
+        messagebox.showinfo("Booking Confirmation", message)
+    def get_selected_equipment():
+        """Return list of selected equipment"""
+        return [eq for eq, selected in selected_equipment.items() if selected]
     # Equipment options and their selection states
     equipment_options = [
         "Basketball", "Shuttle cock", "Tennis Racket", "Ping pong ball",
@@ -102,26 +123,5 @@ def item_GUI(root):
         command=on_confirm_click
     )
     confirm_button.pack(side="right", padx=20)
-    def on_equipment_change(equipment):
-        """Handle equipment selection change"""
-        selected_equipment[equipment] = checkboxes[equipment].get()
-        print(f"{equipment} {'selected' if selected_equipment[equipment] else 'deselected'}")
-    def on_back_click():
-        """Handle back button click"""
-        print("Back button clicked")
-        # Add your back navigation logic here
-        messagebox.showinfo("Navigation", "Back button clicked")
-    def on_confirm_click():
-        """Handle confirm button click"""
-        selected_items = [eq for eq, selected in selected_equipment.items() if selected]
-        if not selected_items:
-            messagebox.showwarning("Selection Required", "Please select at least one equipment item.")
-            return
-        print("Selected equipment:", selected_items)
-        # Show confirmation dialog
-        message = "Selected Equipment:\n" + "\n".join(f"• {item}" for item in selected_items)
-        messagebox.showinfo("Booking Confirmation", message)
-    def get_selected_equipment():
-        """Return list of selected equipment"""
-        return [eq for eq, selected in selected_equipment.items() if selected]
+    
  
