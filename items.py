@@ -28,14 +28,10 @@ def item_GUI(root):
         # Show confirmation dialog
         message = "Selected Equipment:\n" + "\n".join(f"• {item}" for item in selected_items)
         messagebox.showinfo("Items Confirmated", message)
-        for var in selected_items:
-            from appointment_name_date import student_items_data
-            student_items_data.append(var)
-
-        from appointment_name_date import AppointmentBooking
-
         hide_everything()
-        AppointmentBooking(root)
+        from appointment_name_date import AppointmentBooking
+        add_items = AppointmentBooking(root)
+        add_items(selected_items)
 
 
     def get_selected_equipment():

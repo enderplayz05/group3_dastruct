@@ -20,10 +20,9 @@ def send_outlook_email(to_email, subject, body):
 
 def add_appointments(new_data):
         appointments_data.append(new_data)
-        print(appointments_data)
+        print("add appointments: ",appointments_data)
 
 def authorize_frame(root):
-
     frames = {}
     row_widgets = [] 
 
@@ -85,9 +84,9 @@ def authorize_frame(root):
                 row_widgets.append(row_frame)
         appointments_container = tk.Frame(frame, bg="#d9d9d9")
         appointments_container.pack(fill="both", expand=True)
-
+        
         render_appointments(appointments_container)
-
+    
     def approve(appointment, row_frame, index):
         if index != 0:
             messagebox.showwarning("Action Not Allowed", "Please approve the top appointment first.")
@@ -95,11 +94,11 @@ def authorize_frame(root):
             from history import add_to_history
             date, student_id, time = appointment
             add_to_history(appointments_data[0])
+            print("in approve:",appointments_data[0])
             send_outlook_email(
                 appointments_data[0]['student_email'],
                 "GYM EQUIPMENT APPOINTMENT",
                 f"Good day, your appointment of {date} and {time} is approved")
-            from history import add_to_history
             appointments_data.pop(0)  # Remove from data
             row_frame.destroy()
             messagebox.showinfo("Approved", "Appointment approved. (Added to history)")

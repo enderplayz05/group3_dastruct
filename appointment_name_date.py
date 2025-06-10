@@ -2,8 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from datetime import datetime
-student_items_data = []
+
 def AppointmentBooking(root):
+    student_items_data = []
+
+    def add_items(new_data):
+        for item in new_data:
+            student_items_data.append(item)
 
     # Variables to store user input
     name = tk.StringVar()
@@ -271,13 +276,13 @@ def AppointmentBooking(root):
             'Time':selected_time.get(),
             'Date_sent':date_sent_data.strftime("%H:%M:%S"),
             'borrowed_data':student_items_data,
-            'student_email':student_email_entry.get()
+            'student_email':student_email_entry.get(),
             }
         
         add_appointments(new_data)
-        student_items_data = []
-        from Student import student_main_frame
+        from main_menu import main_menu_frame
         clear_screen()
-        student_main_frame(root)
+        main_menu_frame(root)
+    return add_items
 
 

@@ -1,12 +1,14 @@
 import tkinter as tk
 from tkinter import messagebox
-history_data = []
+
+history_data = dict()
 
 def add_to_history(new_data):
-    if isinstance(new_data, dict):
-        history_data.append(new_data)
-    else:
-        print("Invalid history data:", new_data)
+    from datetime import datetime
+    global history_data
+    unique_key = datetime.now().strftime("%Y%m%d%H%M%S")
+    history_data[unique_key] = new_data
+    
 
 def history_frame(root): 
 
@@ -50,30 +52,30 @@ def history_frame(root):
 
     # Search Bar
     search_frame = tk.Frame(frame, bg="#d9d9d9")
-    search_frame.grid(row=2, column=0, columnspan=5, sticky="ew", pady=10)
+    search_frame.grid(row=2, column=0, columnspan=7, sticky="ew", pady=10)
     tk.Label(search_frame, text="Search:", bg="#d9d9d9", font=("Arial", 11)).pack(side="left")
     search_entry = tk.Entry(search_frame, font=("Arial", 11))
     search_entry.pack(side="left", padx=5)
 
     # Header Row
-    headers = ["Student ID", "Name","Time", "Borrowed","Date", "Time sent"]
+    headers = ["Key", "Student ID", "Name", "Time", "Borrowed", "Date", "Time sent"]
     for col, text in enumerate(headers):
         tk.Label(frame, text=text, font=("Arial", 11, "bold"),
                  bg="#cccccc", width=15, anchor="w").grid(row=3, column=col, sticky="ew", padx=2, pady=2)
 
     # Data Rows
-    for idx, record in enumerate(history_data):
+    for idx, (key, record) in enumerate(history_data.items()):
         if not isinstance(record, dict):
-            continue  # skip any invalid entries
+            continue
 
-        row = idx + 6  # Start after headers
+        row = idx + 6# Start after headers
         student_id = record.get("Student_ID", "")
         name = record.get("Name", "")
         time = record.get("Time", "")
         borrowed_equipment = record.get("borrowed_data", "")
         date = f"{record.get('Month', '')}/{record.get('Day', '')}/{record.get('Year', '')}"
         time_sent = record.get("Date_sent", "")
-        values = [student_id, name, time, borrowed_equipment, date, time_sent]
+        values = [key, student_id, name, time, borrowed_equipment, date, time_sent]
 
         for col, val in enumerate(values):
             tk.Label(frame, text=val, font=("Arial", 10), bg="white", anchor="w").grid(
