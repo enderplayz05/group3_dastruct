@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-student_item_data = []
+
 def item_GUI(root):
 
     def hide_everything():
@@ -29,10 +29,11 @@ def item_GUI(root):
         message = "Selected Equipment:\n" + "\n".join(f"• {item}" for item in selected_items)
         messagebox.showinfo("Items Confirmated", message)
         for var in selected_items:
-            student_item_data.append(var)
+            from appointment_name_date import student_items_data
+            student_items_data.append(var)
 
         from appointment_name_date import AppointmentBooking
-        print("from item files",student_item_data)
+
         hide_everything()
         AppointmentBooking(root)
 

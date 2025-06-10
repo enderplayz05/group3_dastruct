@@ -1,19 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from items import student_item_data
-
-student_appointment_data = {'borrowed':student_item_data,'Name':[],'Student_ID':[],'Month':[],'Day':[],'Year':[],'Time':[]}
-print("from appointment file",student_appointment_data)
+from datetime import datetime
+student_items_data = []
 def AppointmentBooking(root):
 
     # Variables to store user input
     name = tk.StringVar()
     student_id = tk.StringVar()
-    selected_month = tk.StringVar(value="June")
-    selected_day = tk.StringVar(value="23")
-    selected_year = tk.StringVar(value="2025")
+    selected_month = tk.StringVar()
+    selected_day = tk.StringVar()
+    selected_year = tk.StringVar()
     selected_time = tk.StringVar()
+    student_email = tk.StringVar()
     
     # Create the main container
     main_frame = tk.Frame(root, bg='#2e4399')
@@ -56,6 +55,15 @@ def AppointmentBooking(root):
     id_entry.pack(fill='x', pady=(0, 50))
     id_entry.insert(0, "Enter your Student ID Number")
     
+    student_email_label = tk.Label(content_frame, text="Student Email", font=('Arial', 12, 'bold'),
+                            bg='#e8e8e8', fg='black')
+    student_email_label.pack(anchor='w', pady=(0, 10))
+
+    student_email_entry = tk.Entry(content_frame, textvariable=student_email, font=('Arial', 11),
+                        bg='#c8c8c8', fg='gray', width=40, relief='flat', bd=10)
+    student_email_entry.pack(fill='x', pady=(0, 70))
+    student_email_entry.insert(0, "Enter your APC email")
+
     # Handle placeholder text
     def on_name_focus_in(event):
         if name_entry.get() == "Enter your name":
@@ -76,11 +84,23 @@ def AppointmentBooking(root):
         if id_entry.get() == "":
             id_entry.insert(0, "Enter your Student ID Number")
             id_entry.config(fg='gray')
+
+    def on_student_email_focus_in(event):
+        if student_email_entry.get() == "Enter your APC email":
+            student_email_entry.delete(0, tk.END)
+            student_email_entry.config(fg='black')
+    
+    def on_student_email_focus_out(event):
+        if student_email_entry.get() == "":
+            student_email_entry.insert(0, "Enter your APC email")
+            student_email_entry.config(fg='gray')
     
     name_entry.bind('<FocusIn>', on_name_focus_in)
     name_entry.bind('<FocusOut>', on_name_focus_out)
     id_entry.bind('<FocusIn>', on_id_focus_in)
     id_entry.bind('<FocusOut>', on_id_focus_out)
+    student_email_entry.bind('<FocusIn>', on_student_email_focus_in)
+    student_email_entry.bind('<FocusOut>', on_student_email_focus_out)
     
     def go_back_from_first():
         from items import item_GUI
@@ -202,7 +222,7 @@ def AppointmentBooking(root):
         # Next button
         next_button = tk.Button(main_frame, text="Next", font=('Arial', 10),
                                bg='white', fg='black', padx=20, pady=5,
-                               command=go_to_next_screen)
+                               command=go_to_next_screen(student_items_data))
         next_button.pack(side='right', padx=10, pady=10)
     
     def go_to_date_screen():
@@ -226,7 +246,7 @@ def AppointmentBooking(root):
         AppointmentBooking(root)
         
     
-    def go_to_next_screen():
+    def go_to_next_screen(student_items_data):
         """Navigate to the next screen (placeholder for future functionality)"""
         # For now, show a confirmation message with the selected details
         message = f"Appointment Details:\n\n"
@@ -234,17 +254,25 @@ def AppointmentBooking(root):
         message += f"Student ID: {student_id.get()}\n"
         message += f"Date: {selected_month.get()} {selected_day.get()}, {selected_year.get()}\n"
         message += f"Time: {selected_time.get()}\n\n"
-        message += f"Borrowed: {student_appointment_data['borrowed']}\n\n"
+        message += f"Borrowed: {student_items_data}\n\n"
     # add items here
-        
+        date_sent_data = datetime.time(datetime.now()) 
         messagebox.showinfo("Appointment Booked", message)
-        student_appointment_data['Name'] = name.get()
-        student_appointment_data['Student_ID'] = student_id.get()
-        student_appointment_data['Month'] = selected_month.get()
-        student_appointment_data['Day'] = selected_day.get()
-        student_appointment_data['Year'] = selected_year.get()
-        student_appointment_data['Time'] = selected_time.get()
-        print(student_appointment_data)
+        from authorize import add_appointments
+        new_data = {
+            'Name':name.get(),
+            'Student_ID':student_id.get(),
+            'Month':selected_month.get(),
+            'Day':selected_day.get(),
+            'Year':selected_year.get(),
+            'Time':selected_time.get(),
+            'Date_sent':date_sent_data.strftime("%H:%M:%S"),
+            'borrowed_data':student_items_data,
+            'student_email':student_email_entry.get()
+            }
+        
+        add_appointments(new_data)
+        student_items_data = []
         from Student import student_main_frame
         clear_screen()
         student_main_frame(root)
