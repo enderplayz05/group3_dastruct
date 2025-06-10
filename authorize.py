@@ -135,7 +135,7 @@ def authorize_frame(root):
                         send_outlook_email(
                         appointments_data[0]['student_email'],
                         "GYM EQUIPMENT APPOINTMENT",
-                        f"Good day, your appointment of {date} and {appointments_data[0]['Time']} is cancelled\nreason of which is\n {reason}")
+                        f"Good day, your appointment of {date} and {appointments_data[0]['Time']} is cancelled, reason of which is:\n {reason}")
                         confirm_processing.pack_forget()
                         appointments_data.pop(0)  # Remove the canceled appointment
                         row_frame.destroy()
