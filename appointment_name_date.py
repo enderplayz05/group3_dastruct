@@ -220,11 +220,14 @@ def AppointmentBooking(root):
         back_button.pack(side='left', padx=10, pady=10)
         
         # Next button
-        next_button = tk.Button(main_frame, text="Next", font=('Arial', 10),
+        next_button = tk.Button(main_frame, text="submit", font=('Arial', 10),
                                bg='white', fg='black', padx=20, pady=5,
-                               command=go_to_next_screen(student_items_data))
+                               command=submit)
         next_button.pack(side='right', padx=10, pady=10)
     
+    def submit():
+        go_to_next_screen(student_items_data)
+        
     def go_to_date_screen():
         """Navigate to date selection screen"""
         # Validate input first

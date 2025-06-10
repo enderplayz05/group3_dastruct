@@ -57,46 +57,53 @@ def authorize_frame(root):
         tk.Label(header_frame, text="Action", width=10, font=("Arial", 11, "bold"), bg="#cccccc").pack(side="left")
         tk.Label(header_frame, text="Date Sent", width=10, font=("Arial", 11, "bold"), bg="#cccccc").pack(side="left",padx=2)
 
-        for appointment in appointments_data:
-            student_id = appointment['Student_ID']
-            time = appointment['Time']
-            date_sent = appointment['Date_sent']
-            date = f"{appointment['Month']}/{appointment['Day']}/{appointment['Year']}"
+        def render_appointments(container):
+            for appointment in appointments_data:
+                student_id = appointment['Student_ID']
+                time = appointment['Time']
+                date_sent = appointment['Date_sent']
+                date = f"{appointment['Month']}/{appointment['Day']}/{appointment['Year']}"
 
-            row_frame = tk.Frame(frame, bg="#d9d9d9", bd=1, relief="solid")
-            row_frame.pack(pady=5, padx=20, fill="x")
+                row_frame = tk.Frame(container, bg="#d9d9d9", bd=1, relief="solid")
+                row_frame.pack(pady=5, padx=20, fill="x")
 
-            tk.Label(row_frame, text=date, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=0, padx=2)
-            tk.Label(row_frame, text=student_id, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=1, padx=2)
-            tk.Label(row_frame, text=time, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=2, padx=2)
-            tk.Label(row_frame, text=date_sent, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=3, padx=2)
+                tk.Label(row_frame, text=date, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=0, padx=2)
+                tk.Label(row_frame, text=student_id, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=1, padx=2)
+                tk.Label(row_frame, text=time, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=2, padx=2)
+                tk.Label(row_frame, text=date_sent, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=3, padx=2)
 
-            btn_frame = tk.Frame(row_frame, bg="#d9d9d9")
-            btn_frame.grid(row=0, column=3, padx=2)
+                btn_frame = tk.Frame(row_frame, bg="#d9d9d9")
+                btn_frame.grid(row=0, column=3, padx=2)
 
-            appt_str = f"{date}-{student_id} Scheduled for {time}"
-            idx = appointments_data.index(appointment)
-            tk.Button(btn_frame, text="✅", font=("Arial", 12), command=lambda a=(date, student_id, time), rf=row_frame, i=idx: approve(a, rf, i)).pack(side="left", padx=2)
-            tk.Button(btn_frame, text="❌", font=("Arial", 12), command=lambda a=appt_str, rf=row_frame, i=idx: cancel_frame(a, rf, i)).pack(side="left", padx=2)
+                appt_str = f"{date}-{student_id} Scheduled for {time}"
+                idx = appointments_data.index(appointment)
+                tk.Button(btn_frame, text="✅", font=("Arial", 12), command=lambda a=(date, student_id, time), rf=row_frame, i=idx: approve(a, rf, i)).pack(side="left", padx=2)
+                tk.Button(btn_frame, text="❌", font=("Arial", 12), command=lambda a=appt_str, rf=row_frame, i=idx: cancel_frame(a, rf, i)).pack(side="left", padx=2)
 
-            tk.Label(row_frame, text=date_sent, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=4, padx=2)
+                tk.Label(row_frame, text=date_sent, width=15, font=("Arial", 11), bg="#d9d9d9").grid(row=0, column=4, padx=2)
 
-            row_widgets.append(row_frame)
+                row_widgets.append(row_frame)
+        appointments_container = tk.Frame(frame, bg="#d9d9d9")
+        appointments_container.pack(fill="both", expand=True)
 
-    def approve(appointment, row_frame,index):
+        render_appointments(appointments_container)
+
+    def approve(appointment, row_frame, index):
         if index != 0:
             messagebox.showwarning("Action Not Allowed", "Please approve the top appointment first.")
         else:
             from history import add_to_history
             date, student_id, time = appointment
-            add_to_history(appointments_data)
-            messagebox.showinfo("Approved", "Appointment approved. (Added to history)")
+            add_to_history(appointments_data[0])
             send_outlook_email(
                 appointments_data[0]['student_email'],
                 "GYM EQUIPMENT APPOINTMENT",
                 f"Good day, your appointment of {date} and {time} is approved")
-            appointments_data.pop(index)
+            from history import add_to_history
+            appointments_data.pop(0)  # Remove from data
             row_frame.destroy()
+            messagebox.showinfo("Approved", "Appointment approved. (Added to history)")
+            main_frame()     # Refresh list
 
     def cancel_frame(appointment, row_frame, index):
         if index != 0:
@@ -131,8 +138,9 @@ def authorize_frame(root):
                         "GYM EQUIPMENT APPOINTMENT",
                         f"Good day, your appointment of {date} and {appointments_data[0]['Time']} is cancelled\nreason of which is\n {reason}")
                         confirm_processing.pack_forget()
-                        appointments_data.pop(index)
+                        appointments_data.pop(0)  # Remove the canceled appointment
                         row_frame.destroy()
+                        main_frame()      # Refresh list
                         show_frame('main')
                 tk.Button(button_frame, text="Confirm", command=confirm, bg="white", font=("Arial", 10, "bold")).pack(side="left", padx=10)
                 

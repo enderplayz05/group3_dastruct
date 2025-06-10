@@ -3,7 +3,10 @@ from tkinter import messagebox
 history_data = []
 
 def add_to_history(new_data):
+    if isinstance(new_data, dict):
         history_data.append(new_data)
+    else:
+        print("Invalid history data:", new_data)
 
 def history_frame(root): 
 
@@ -43,7 +46,7 @@ def history_frame(root):
     # Title
     title = tk.Label(frame, text="History", font=("Arial", 20, "bold"),
                      bg="#1b1f3b", fg="white")
-    title.grid(row=1, column=0, columnspan=5, sticky="ew", pady=5)
+    title.grid(row=1, column=0, columnspan=6, sticky="ew", pady=5)
 
     # Search Bar
     search_frame = tk.Frame(frame, bg="#d9d9d9")
@@ -53,21 +56,25 @@ def history_frame(root):
     search_entry.pack(side="left", padx=5)
 
     # Header Row
-    headers = ["Student ID", "Name","Time", "borrowed","Date", "time Sent"]
+    headers = ["Student ID", "Name","Time", "Borrowed","Date", "Time sent"]
     for col, text in enumerate(headers):
         tk.Label(frame, text=text, font=("Arial", 11, "bold"),
                  bg="#cccccc", width=15, anchor="w").grid(row=3, column=col, sticky="ew", padx=2, pady=2)
 
     # Data Rows
     for idx, record in enumerate(history_data):
+        if not isinstance(record, dict):
+            continue  # skip any invalid entries
+
         row = idx + 6  # Start after headers
         student_id = record.get("Student_ID", "")
         name = record.get("Name", "")
-        time = record.get("Time","")
-        borrowed_equipment = record.get("borrowed_data")
-        date = f"{record.get('Month')}/{record.get('Day')}/{record.get('Year')}"
+        time = record.get("Time", "")
+        borrowed_equipment = record.get("borrowed_data", "")
+        date = f"{record.get('Month', '')}/{record.get('Day', '')}/{record.get('Year', '')}"
         time_sent = record.get("Date_sent", "")
-        values = [student_id, name, time,borrowed_equipment,date, time_sent]
+        values = [student_id, name, time, borrowed_equipment, date, time_sent]
+
         for col, val in enumerate(values):
             tk.Label(frame, text=val, font=("Arial", 10), bg="white", anchor="w").grid(
                 row=row, column=col, sticky="ew", padx=2, pady=2)
