@@ -8,6 +8,9 @@ def add_to_history(new_data):
     global history_data
     unique_key = datetime.now().strftime("%Y%m%d%H%M%S")
     history_data[unique_key] = new_data
+
+    from manage import manage_import_data
+    manage_import_data(unique_key,new_data)
     
 
 def history_frame(root): 
