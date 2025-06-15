@@ -17,6 +17,8 @@ def manage_frame(root):
         back_button.pack_forget()
         next_button.pack_forget()
         add_item_btn.pack_forget()
+        add_frame.pack_forget()
+        item_combo.pack_forget()
         
 
     def go_back():
@@ -192,11 +194,12 @@ def manage_frame(root):
     
     def show_add_item_combobox():
         # Frame to hold combobox and confirm button
+        global add_frame
         add_frame = tk.Frame(root, bg="#e0e0e0")
         add_frame.pack(pady=5)
 
         tk.Label(add_frame, text="Select item to add:", font=("Arial", 10), bg="#e0e0e0").pack(side="left")
-
+        global item_combo
         item_choices = ["Basketball", "Shuttle cock", "Tennis Racket", "Ping pong ball",
                         "Tennis Ball", "Table tennis racket", "Badminton Racket", "Net"]
         item_combo = ttk.Combobox(add_frame, values=item_choices)
