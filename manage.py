@@ -18,6 +18,8 @@ def manage_frame(root):
         next_button.pack_forget()
         add_item_btn.pack_forget()
         try:
+            add_frame.pack_forget()
+            manage_label.pack_forget()
             save_button.pack_forget()
             item_combo.pack_forget()
         except:
@@ -33,13 +35,14 @@ def manage_frame(root):
     # Header
     header = tk.Frame(root, bg="#2d2f38", height=40)
     header.pack(fill="x")
-    tk.Label(
+    manage_label = tk.Label(
         header,
         text="MANAGE APPOINTMENTS",
         font=("Arial", 14, "bold"),
         fg="white",
         bg="#2d2f38"
-    ).pack(pady=5)
+    )
+    manage_label.pack(pady=5)
 
     # Form Frame
     frame = tk.Frame(root, bg="#e0e0e0")
