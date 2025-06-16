@@ -219,7 +219,7 @@ def manage_frame(root):
             else:
                 tk.messagebox.showwarning("No Item", "Please select an item.")
 
-        confirm_button = tk.Button(add_frame, text="Confirm", command=confirm_add_item).pack(side="left")
+        tk.Button(add_frame, text="Confirm", command=confirm_add_item).pack(side="left")
 
 
     btn_frame = tk.Frame(root, bg="#e0e0e0")
