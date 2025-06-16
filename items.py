@@ -16,13 +16,13 @@ def item_GUI(root):
         from Student import student_main_frame
         hide_everything()
         student_main_frame(root)
-        # Add your back navigation logic here
+
         
     def on_confirm_click():
         """Handle confirm button click"""
         selected_items = [eq for eq, selected in selected_equipment.items() if selected]
         if not selected_items:
-            messagebox.showwarning("Selection Required", "Please select at least one equipment item.")
+            messagebox.showwarning("Selection Required", "Please select at least one equipment item.") #warning
             return
         print("Selected equipment:", selected_items)
         # Show confirmation dialog
