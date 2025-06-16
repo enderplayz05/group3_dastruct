@@ -16,27 +16,15 @@ categories = [
         ]
     },
     {
-        "name": "Basketball Equipment",
+        "name": "General Sports",
         "items": [
             {"name": "Basketball", "qty": 8},
-            {"name": "Basketball Hoop", "qty": 2},
-            {"name": "Basketball Shoes", "qty": 6},
-            {"name": "Basketball Jersey", "qty": 12},
-            {"name": "Basketball Shorts", "qty": 12},
-            {"name": "Water Bottle", "qty": 15},
-            {"name": "Towel", "qty": 10}
-        ]
-    },
-    {
-        "name": "Badminton Equipment",
-        "items": [
-            {"name": "Badminton Racket", "qty": 8},
-            {"name": "Shuttle cock", "qty": 20},
             {"name": "Badminton Net", "qty": 2},
-            {"name": "Badminton Shoes", "qty": 6},
-            {"name": "Grip Tape", "qty": 15},
-            {"name": "String", "qty": 5},
-            {"name": "Badminton Bag", "qty": 4}
+            {"name": "Sport Shoes", "qty": 6},
+            {"name": "Badminton Racket", "qty": 8},
+            {"name": "Shuttle cock", "qty": 10},
+            {"name": "Extension Cord", "qty": 8},
+            
         ]
     }
 ]
