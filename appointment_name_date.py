@@ -3,14 +3,15 @@ from tkinter import ttk
 from tkinter import messagebox
 from datetime import datetime
 
+#main func
 def AppointmentBooking(root):
     student_items_data = []
-
+#add borrowed data to list
     def add_items(new_data):
         for item in new_data:
             student_items_data.append(item)
 
-    # Variables to store user input
+    # Variables to store user input (id, email, date/time)
     name = tk.StringVar()
     student_id = tk.StringVar()
     selected_month = tk.StringVar()
@@ -23,7 +24,7 @@ def AppointmentBooking(root):
     main_frame = tk.Frame(root, bg='#2e4399')
     main_frame.pack(expand=True, fill='both', padx=50, pady=50)
     
-    # Show the first screen initially
+    # Show the first screen initially, clear before moving 
     
     def clear_screen():
         main_frame.pack_forget()
@@ -69,8 +70,8 @@ def AppointmentBooking(root):
     student_email_entry.pack(fill='x', pady=(0, 70))
     student_email_entry.insert(0, "Enter your APC email")
 
-    # Handle placeholder text
-    def on_name_focus_in(event):
+    # Handle placeholder text, detect when u click outside
+    def on_name_focus_in(event): 
         if name_entry.get() == "Enter your name":
             name_entry.delete(0, tk.END)
             name_entry.config(fg='black')
@@ -107,12 +108,12 @@ def AppointmentBooking(root):
     student_email_entry.bind('<FocusIn>', on_student_email_focus_in)
     student_email_entry.bind('<FocusOut>', on_student_email_focus_out)
     
-    def go_back_from_first():
+    def go_back_from_first(): #goes back item borrowing screen
         from items import item_GUI
         clear_screen()
         item_GUI(root)
 
-    def go_to_date_screen():
+    def go_to_date_screen(): #checks if filled in
         """Navigate to date selection screen"""
         # Validate input first
         name = name_entry.get()
@@ -230,7 +231,7 @@ def AppointmentBooking(root):
                                command=submit)
         next_button.pack(side='right', padx=10, pady=10)
     
-    def submit():
+    def submit(): #final confirmation and data handling logic
         go_to_next_screen(student_items_data)
         
     def go_to_date_screen():
@@ -248,12 +249,12 @@ def AppointmentBooking(root):
             return
         
         show_date_screen()
-    
+    #reload screen
     def go_to_name_screen():
         clear_screen()
         AppointmentBooking(root)
         
-    
+    #pop up summary
     def go_to_next_screen(student_items_data):
         """Navigate to the next screen (placeholder for future functionality)"""
         # For now, show a confirmation message with the selected details
@@ -263,7 +264,7 @@ def AppointmentBooking(root):
         message += f"Date: {selected_month.get()} {selected_day.get()}, {selected_year.get()}\n"
         message += f"Time: {selected_time.get()}\n\n"
         message += f"Borrowed: {student_items_data}\n\n"
-    # add items here
+    # add items here, save and send to authorize.py
         date_sent_data = datetime.time(datetime.now()) 
         messagebox.showinfo("Appointment Booked", message)
         from authorize import add_appointments
@@ -278,7 +279,7 @@ def AppointmentBooking(root):
             'borrowed_data':student_items_data,
             'student_email':student_email_entry.get(),
             }
-        
+        #clears and load main menu
         add_appointments(new_data)
         from main_menu import main_menu_frame
         clear_screen()
