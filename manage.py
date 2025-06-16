@@ -17,7 +17,6 @@ def manage_frame(root):
         back_button.pack_forget()
         next_button.pack_forget()
         add_item_btn.pack_forget()
-        add_frame.pack_forget()
         item_combo.pack_forget()
         
 
