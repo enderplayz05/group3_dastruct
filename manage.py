@@ -17,7 +17,13 @@ def manage_frame(root):
         back_button.pack_forget()
         next_button.pack_forget()
         add_item_btn.pack_forget()
-        item_combo.pack_forget()
+        try:
+            save_button.pack_forget()
+            item_combo.pack_forget()
+        except:
+            print("already deleted")
+    
+
         
 
     def go_back():
@@ -213,7 +219,7 @@ def manage_frame(root):
             else:
                 tk.messagebox.showwarning("No Item", "Please select an item.")
 
-        tk.Button(add_frame, text="Confirm", command=confirm_add_item).pack(side="left")
+        confirm_button = tk.Button(add_frame, text="Confirm", command=confirm_add_item).pack(side="left")
 
 
     btn_frame = tk.Frame(root, bg="#e0e0e0")
