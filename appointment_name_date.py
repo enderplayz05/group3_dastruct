@@ -192,7 +192,7 @@ def AppointmentBooking(root):
         year_label.pack(anchor='w', pady=(0, 10))
         
         year_combo = ttk.Combobox(left_frame, textvariable=selected_year,
-                                 values=["2024", "2025", "2026"],
+                                 values=["2025", "2026"],
                                  state="readonly", font=('Arial', 11))
         year_combo.pack(fill='x', pady=(0, 20))
         
